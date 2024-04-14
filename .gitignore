@@ -1,1 +1,6 @@
 venv
+pyvenv.cfg
+.vscode
+lib64__pycache__
+*.pyc
+*.pyo
