@@ -4,3 +4,6 @@ pyvenv.cfg
 lib64__pycache__
 *.pyc
 *.pyo
+env
+.secrets
+.idea

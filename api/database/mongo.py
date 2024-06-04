@@ -3,18 +3,21 @@ from pymongo import MongoClient
 
 from api.models.models import Solution, Company
 
-client = MongoClient("mongodb+srv://luster1.ztwaiia.mongodb.net", username="functional", password="jRZJpaUMEchdXtlS")
+with open("../../.secrets/mongodb.secrets") as file:
+    connection_string = file.readline().strip()
+
+client = MongoClient(connection_string)
 db = client["bxventures"]
 solutions = db.solutions
 companies = db.companies
 
 
-def insert_solution(solution: dict):
-    return solutions.insert_one(solution)
+def insert_solution(solution: Solution):
+    return solutions.insert_one(solution.model_dump(by_alias=True))
 
 
 def insert_company(company: Company):
-    companies.insert_one(company)
+    companies.insert_one(company.dict(by_alias=True))
 
 
 def get_solution(filters: dict) -> Solution:
