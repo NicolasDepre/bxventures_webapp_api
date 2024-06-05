@@ -11,3 +11,7 @@ def insert(solution: Solution):
 
 def get_all():
     return mongo.get_all_solutions()
+
+
+def get_by_id(solution_id: str):
+    return mongo.get_solution({"_id": solution_id})

@@ -2,10 +2,9 @@ import typing
 from enum import Enum
 from uuid import uuid4
 
-from pydantic import BaseModel, Field, ConfigDict, AliasGenerator, field_validator
-from typing import List, Any
+from pydantic import BaseModel, Field, ConfigDict, field_validator
+from typing import List, Union
 
-from pydantic.main import IncEx
 from typing_extensions import Annotated
 from pydantic.functional_validators import BeforeValidator
 
@@ -47,25 +46,25 @@ class Solution(BaseModel):
         use_enum_values=True
     )
     id: PyObjectId = Field(alias="_id", default_factory=lambda: uuid4().hex)
-    name: str = Field(validation_alias="product_name", description="Product name of the technology")
+    name: str = Field(description="Product name of the technology")
     country: str = Field(description="Country of the headquarters of the technology")
-    location: str = Field(description="City/town of the headquarters of the technology")
-    spin_off_from: str = Field(None, description="Name of the university or large corporate if relevant")
-    short_description: str = Field(description="Short version of the value proposition description")
-    value_proposition: str = Field(description="Long version of the value proposition description")
+    location: Union[str, None] = Field(description="City/town of the headquarters of the technology")
+    spin_off_from: Union[str, None] = Field(None, description="Name of the university or large corporate if relevant")
+    short_description: Union[str, None] = Field(description="Short version of the value proposition description")
+    value_proposition: Union[str, None] = Field(description="Long version of the value proposition description")
     commercial_approach: COMMERCIAL_APPROACH = Field(description="Primary commercial approach (B2B, B2C, B2G, B2BC)")
     un_sdg: List[str] = Field(description="UN Sustainable Development Goals associated with the technology")
     sector: List[SECTOR] = Field(description="Sectors associated with the technology")
     technology_clusters: List[str] = Field(description="Technology clusters linked to sectors")
-    technology_tags: List[str] = Field(validation_alias="technology_tag", description="Technology tags for overall search")
-    intellectual_property: str = Field(None, description="Short description of intellectual property")
-    google_patent_link: str = Field(None, description="Website link to relevant patent")
-    environmental_benefits: str = Field(None, description="Short description of environmental benefits")
+    technology_tags: List[str] = Field(description="Technology tags for overall search")
+    intellectual_property: Union[str, None] = Field(None, description="Short description of intellectual property")
+    google_patent_link: Union[str, None] = Field(None, description="Website link to relevant patent")
+    environmental_benefits: Union[str, None] = Field(None, description="Short description of environmental benefits")
     article_9_compliance: List[str] = Field(description="Article 9 compliance with sustainable objectives")
-    financial_benefits: str = Field(None, description="Short description of financial benefits")
-    comments: str = Field(None, description="Space for comments (max 200 characters)")
-    image: str = Field(None, description="Image of the technology (standardized size)")
-    video: str = Field(None, description="Link to video of the technology (YouTube)")
+    financial_benefits: Union[str, None] = Field(None, description="Short description of financial benefits")
+    comments: Union[str, None] = Field(None, description="Space for comments (max 200 characters)")
+    image: Union[str, None] = Field(None, description="Image of the technology (standardized size)")
+    video: Union[str, None] = Field(None, description="Link to video of the technology (YouTube)")
     company: PyObjectId = Field(None, description="ID of the company that own the solution.")
 
 
@@ -130,6 +129,7 @@ class Company(BaseModel):
             elif "-" == v:
                 return -1
         return v
+
 
 class SolutionContainer(BaseModel):
     solutions: List[Solution]

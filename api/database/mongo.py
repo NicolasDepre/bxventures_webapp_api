@@ -3,10 +3,10 @@ from pymongo import MongoClient
 
 from api.models.models import Solution, Company
 
-with open("../../.secrets/mongodb.secrets") as file:
-    connection_string = file.readline().strip()
+# with open("../../.secrets/mongodb.secrets") as file:
+  #  connection_string = file.readline().strip()
 
-client = MongoClient(connection_string)
+client = MongoClient("mongodb+srv://luster1.ztwaiia.mongodb.net", username="functional", password="jRZJpaUMEchdXtlS")
 db = client["bxventures"]
 solutions = db.solutions
 companies = db.companies
