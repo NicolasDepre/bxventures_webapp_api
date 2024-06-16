@@ -91,6 +91,9 @@ class Solution(BaseModel):
         return v
 
 
+
+
+
 class Company(BaseModel):
     model_config = ConfigDict(
         use_enum_values=True
@@ -107,10 +110,10 @@ class Company(BaseModel):
     number_of_employees: str = Field(None, description="Number of employees as mentioned in LinkedIn")
     private_funding: float = Field(None, description="Amount of funding received from investors in USD")
     public_funding: float = Field(None, description="Amount of funding received from public entities in USD")
-    logo: str = Field(None, description="Logo of the company (standardized size)")
-    company_website: str = Field(None, description="Link to company website")
-    company_linkedin_website: str = Field(None, description="Link to company LinkedIn website")
-    comments: str = Field(None, description="Comment of the company")
+    logo: Union[str, None] = Field(None, description="Logo of the company (standardized size)")
+    company_website: Union[str, None] = Field(None, description="Link to company website")
+    company_linkedin_website: Union[str, None] = Field(None, description="Link to company LinkedIn website")
+    comments: Union[str, None] = Field(None, description="Comment of the company")
     solutions: list[PyObjectId] = Field([], description="List of IDs all the solutions of the company.")
 
     @field_validator("founders", mode="before")
@@ -131,5 +134,11 @@ class Company(BaseModel):
         return v
 
 
+class SolutionWithCompany(Solution):
+    company: List[Company]
+
+
 class SolutionContainer(BaseModel):
-    solutions: List[Solution]
+    solutions: List[SolutionWithCompany]
+
+

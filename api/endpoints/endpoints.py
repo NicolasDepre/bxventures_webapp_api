@@ -11,7 +11,7 @@ router = APIRouter()
             response_model=SolutionContainer,
             response_model_by_alias=False)
 def get_solutions():
-    return SolutionContainer(solutions=solutions.get_all())
+    return SolutionContainer(solutions=solutions.get_all_list_view())
 
 
 @router.get("/solution/{id}")

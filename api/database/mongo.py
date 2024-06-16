@@ -11,6 +11,9 @@ db = client["bxventures"]
 solutions = db.solutions
 companies = db.companies
 
+# READ ONLY View
+list_view = db.list_view
+
 
 def insert_solution(solution: Solution):
     return solutions.insert_one(solution.model_dump(by_alias=True))
@@ -30,3 +33,27 @@ def get_company(id: str) -> Company:
 
 def get_all_solutions() -> list:
     return solutions.find()
+
+
+def get_list_view() -> list:
+    return list_view.find()
+
+
+def create_view():
+
+    pipeline = [
+        {
+            "$lookup": {
+                "from": "companies",
+                "localField": "company",
+                "foreignField": "_id",
+                "as": "company"
+            }
+        }
+    ]
+
+    db.command({
+        "create": "list_view",
+        "viewOn": "solutions",
+        "pipeline": pipeline
+    })
