@@ -20,11 +20,17 @@ def insert_solution(solution: Solution):
 
 
 def insert_company(company: Company):
-    companies.insert_one(company.dict(by_alias=True))
+    return companies.insert_one(company.model_dump(by_alias=True))
 
 
 def get_solution(filters: dict) -> Solution:
+    print("Demande with filter: ")
+    print(filters)
     return solutions.find_one(filters)
+
+
+def get_solution_view(filters: dict) -> Solution:
+    return list_view.find_one(filters)
 
 
 def get_company(id: str) -> Company:

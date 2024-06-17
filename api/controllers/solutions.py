@@ -14,7 +14,7 @@ def get_all():
 
 
 def get_by_id(solution_id: str):
-    return mongo.get_solution({"_id": solution_id})
+    return mongo.get_solution_view({"_id": solution_id})
 
 
 def get_all_list_view():

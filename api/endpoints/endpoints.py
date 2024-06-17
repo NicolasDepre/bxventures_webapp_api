@@ -16,7 +16,7 @@ def get_solutions():
 
 @router.get("/solution/{id}")
 def get_solution(id):
-    return
+    return solutions.get_by_id(id)
 
 
 @router.get("/companies")
@@ -26,7 +26,7 @@ def get_companies():
 
 @router.get("/company/{id}")
 def get_company(id):
-    return
+    return company.get_by_id(id)
 
 
 @router.post("/solution")
